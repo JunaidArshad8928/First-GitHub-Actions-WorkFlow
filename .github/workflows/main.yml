@@ -1,26 +1,39 @@
-name: Junaid Arshad First Workflow
+name: Deploy Website
 
 on:
   push:
     branches:
       - main
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
-  first-job:
+  deploy:
     runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Print Welcome Message
-        run: echo "Assalamu Alaikum! Welcome to GitHub Actions."
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
 
-      - name: Print Student Name
-        run: echo "Junaid Arshad is learning DevOps."
+      - name: Upload Website
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
 
-      - name: Show Current Date
-        run: date
-
-      - name: List Repository Files
-        run: ls
+      - name: Deploy Website
+        id: deployment
+        uses: actions/deploy-pages@v4
