@@ -1,0 +1,26 @@
+name: Junaid Arshad First Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  first-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Print Welcome Message
+        run: echo "Assalamu Alaikum! Welcome to GitHub Actions."
+
+      - name: Print Student Name
+        run: echo "Junaid Arshad is learning DevOps."
+
+      - name: Show Current Date
+        run: date
+
+      - name: List Repository Files
+        run: ls
